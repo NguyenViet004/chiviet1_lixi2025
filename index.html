@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lắc Lì Xì</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fdf5e6;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .red-envelope {
+            width: 150px;
+            height: 200px;
+            margin: 20px auto;
+            background-color: #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+        .red-envelope:hover {
+            transform: scale(1.1);
+            transition: 0.3s;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .message {
+            font-size: 20px;
+            font-weight: bold;
+            color: #008000;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 Lắc Lì Xì Đầu Năm 🎉</h1>
+    <p>Bạn có 2 lần lắc. Chúc bạn may mắn!</p>
+    <div class="container">
+        <div class="red-envelope" id="envelope">Lắc!</div>
+        <div class="result" id="result"></div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        let remainingShakes = 2; // Số lượt lắc còn lại
+        const rewards = [
+            { value: "5k", weight: 50 },
+            { value: "10k", weight: 30 },
+            { value: "20k", weight: 15 },
+            { value: "50k", weight: 5 },
+        ];
+
+        // Hàm random phần thưởng dựa trên tỷ lệ
+        function randomReward() {
+            const weightedRewards = [];
+            rewards.forEach(reward => {
+                for (let i = 0; i < reward.weight; i++) {
+                    weightedRewards.push(reward.value);
+                }
+            });
+            const randomIndex = Math.floor(Math.random() * weightedRewards.length);
+            return weightedRewards[randomIndex];
+        }
+
+        // Xử lý sự kiện lắc lì xì
+        document.getElementById("envelope").addEventListener("click", function () {
+            if (remainingShakes > 0) {
+                const reward = randomReward();
+                const resultElement = document.getElementById("result");
+                resultElement.innerHTML += `Lần ${3 - remainingShakes}: Bạn nhận được <strong>${reward}</strong><br>`;
+                remainingShakes--;
+
+                if (remainingShakes === 0) {
+                    document.getElementById("message").innerText = "🎉 Chúc mừng năm mới! Chúc bạn may mắn và tài lộc! 🎉";
+                    document.getElementById("envelope").style.pointerEvents = "none";
+                    document.getElementById("envelope").innerText = "Hết lượt!";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lắc Lì Xì Tết 2025</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #FFD700;
+            color: #D2691E;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .title {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .red-envelope {
+            width: 150px;
+            height: 200px;
+            background-color: #FF4500;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .red-envelope:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+        .message {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        .result {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #8B0000;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #FF6347;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #FF4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Lắc Lì Xì Tết 2025</div>
+        <div class="red-envelope" onclick="shakeLiXi()">
+            <span>🎁</span>
+        </div>
+        <div class="message" id="message">Nhấn vào bao lì xì để lắc!</div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let attempts = 0;
+        const rewards = [
+            ...Array(10).fill("Bạn nhận được 5k!"),
+            ...Array(8).fill("Bạn nhận được 10k!"),
+            ...Array(5).fill("Bạn nhận được 20k!"),
+            "Chúc mừng năm mới cùng lắc lại nhé!"
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        shuffle(rewards);
+
+        function shakeLiXi() {
+            if (attempts < 2) {
+                attempts++;
+                const randomIndex = Math.floor(Math.random() * rewards.length);
+                const reward = rewards[randomIndex];
+                document.getElementById("message").textContent = reward;
+                if (attempts === 2 && reward.includes("Chúc mừng")) {
+                    document.getElementById("message").textContent = "Chúc mừng năm mới";
+                }
+            } else {
+                document.getElementById("message").textContent = "Bạn đã hết lượt lắc! Chúc mừng năm mới!";
+            }
+        }
+    </script>
+</body>
+</html> -->
+
